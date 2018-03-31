@@ -19,9 +19,18 @@ public class MainApp {
 
 		// erode the image
 		Mat erodedImageMat = ImageUtil.erode(srcImageMat, kernel);
+		Imgcodecs.imwrite("eroded.png", erodedImageMat);
 
-		Imgcodecs.imwrite("2.png", erodedImageMat);
+		//create a circular structuring element 
+		kernelSize = 4;
+		kernel = ImageUtil.getCircularKernel(kernelSize);
+		//Dilate the image
+		Mat dilatedImageMat = ImageUtil.dilate(erodedImageMat, kernel);
+
+		Imgcodecs.imwrite("eroded_dilated.png", dilatedImageMat);
 
 	}
+	
+	
 
 }

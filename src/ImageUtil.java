@@ -14,6 +14,12 @@ public class ImageUtil {
 		Imgproc.erode(input, outputImageMat, kernel);
 		return outputImageMat;
 	}
+	
+	public static Mat dilate(Mat input, Mat kernel) {
+		Mat outputImageMat = new Mat();
+		Imgproc.dilate(input, outputImageMat, kernel);
+		return outputImageMat;
+	}
 
 	public static Mat getCircularKernel(int kernelSize) {
 		double kernelWidth = kernelSize * 2 + 1;
