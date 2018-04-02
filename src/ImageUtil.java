@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
@@ -60,5 +61,13 @@ public class ImageUtil {
 			}
 		}
 		return centers;
+	}
+	
+	public static Mat wrap(Mat image, Point[] srcPoints, Point[] dstPoints) {
+		MatOfPoint2f srcMat = new MatOfPoint2f(srcPoints[0], srcPoints[1], srcPoints[2], srcPoints[3]);
+		MatOfPoint2f dstMat = new MatOfPoint2f(dstPoints[0], dstPoints[1], dstPoints[2], dstPoints[3]);
+		Mat warpMat = Imgproc.getPerspectiveTransform(srcMat, dstMat);
+		Imgproc.warpPerspective(image, image, warpMat, image.size());
+		return image;
 	}
 }
