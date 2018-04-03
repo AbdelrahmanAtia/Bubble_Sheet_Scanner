@@ -2,10 +2,8 @@ import java.util.ArrayList;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
 
 public class MainApp {
 	static {
@@ -20,10 +18,10 @@ public class MainApp {
 		Mat image = Imgcodecs.imread(imagePath);
 		Mat kernel = ImageUtil.getCircularKernel(kernelSize);
 		image = ImageUtil.erode(image, kernel);
-		//Imgcodecs.imwrite("eroded.png", image);
+		Imgcodecs.imwrite("eroded.png", image);
 		kernel = ImageUtil.getCircularKernel(kernelSize + 1);
 		image = ImageUtil.dilate(image, kernel);
-		//Imgcodecs.imwrite("eroded_dilated.png", image);
+		Imgcodecs.imwrite("eroded_dilated.png", image);
 		Mat circles = ImageUtil.detectCircles(image);
 		// get the two bottom circles
 		ArrayList<Point> centers = ImageUtil.getCirclesCenters(circles, 20, 60, 1430);
@@ -53,11 +51,11 @@ public class MainApp {
 						// two circles make with the horizontal
 
 		slope = (yb - ya) / (xb - xa);
-		theta = Math.atan(slope); // angle between the line connecting centers 
-		//of the two circles and horizintal in radians
+		theta = Math.atan(slope); // angle between the line connecting centers
+		// of the two circles and horizintal in radians
 
-		//(x1, y1) (x2, y2), (x3,y3) (x4,y4) are the coordinates of the corners
-		//of the slant paper..
+		// (x1, y1) (x2, y2), (x3,y3) (x4,y4) are the coordinates of the corners
+		// of the slant paper..
 		double x3 = xa + h * Math.sin(theta) - m * Math.cos(theta);
 		double y3 = ya - h * Math.cos(theta) - m * Math.sin(theta);
 
@@ -70,26 +68,31 @@ public class MainApp {
 		double x2 = x1 + D * Math.cos(theta);
 		double y2 = y1 + D * Math.sin(theta) + 10;
 
-		//srcPoints array contains corner coordinates of the slant 
+		// srcPoints array contains corner coordinates of the slant
 		Point[] srcPoints = new Point[4];
 		srcPoints[0] = new Point(x1, y1);
 		srcPoints[1] = new Point(x2, y2);
 		srcPoints[2] = new Point(x3, y3);
 		srcPoints[3] = new Point(x4, y4);
 
-		//dstPoints array contains the new coordinates which the slant paper corner
-		//coordinates will be mapped to.
+		// dstPoints array contains the new coordinates which the slant paper
+		// corner
+		// coordinates will be mapped to.
 		Point[] dstPoints = new Point[4];
 
 		dstPoints[0] = new Point(0, 0);
 		dstPoints[1] = new Point(image.width() - 1, 0);
 		dstPoints[2] = new Point(0, image.height() - 1);
 		dstPoints[3] = new Point(image.width() - 1, image.height() - 1);
-		
-		//wrap the image from srcPoints to dstPoints
+
+		// wrap the image from srcPoints to dstPoints
 		image = ImageUtil.wrap(image, srcPoints, dstPoints);
-		//Imgcodecs.imwrite("eroded_dilated_wrapped.png", image);
+		Imgcodecs.imwrite("eroded_dilated_wrapped.png", image);
 
+		image = ImageUtil.erode(image, kernel);
+		Imgcodecs.imwrite("eroded_dilated_wrapped_eroded.png", image);
+
+		image = ImageUtil.thresholdImage(image);
+		Imgcodecs.imwrite("eroded_dilated_wrapped_eroded_thresholded.png", image);
 	}
-
 }
