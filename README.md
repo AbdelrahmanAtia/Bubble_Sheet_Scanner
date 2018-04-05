@@ -3,7 +3,7 @@
 
 <h1> this system perform the following steps to grade student sheet:- </h1>
 >> here is the sheet image:- <br>
-  ![Screenshot](1.png) <br>
+![screenshot](1.png)
 1- erode the sheet image <br>
 ![Screenshot](2.png) <br>
 2- dilate the eroded image <br>
