@@ -4,24 +4,16 @@ import org.opencv.core.Mat;
 public class Answer {
 
 	private final static int radius = 16; // radius of answer circle
-	private final static int width = 2 * radius; // width of square outside
-													// circle
-	private final static int height = 2 * radius; // height of square outside
-													// circle
+	private final static int width = 2 * radius; // width of square outside circle
+	private final static int height = 2 * radius; // height of square outside circle
 	private final static int white_circle_intenisity = 255 * width * height;
 	private final static int black_circle_intenisity = 0 * width * height;
 	private final static int avg_circle_intenisity = (white_circle_intenisity + black_circle_intenisity) * 90 / 100;
 	private final static int horizontal_center_offset = 52;
 	private final static int vertical_center_offset = 60;
-	private static final int firstSectionX = 154; // x coordinate of center of
-													// the top left circle of
-													// first section
-	private static final int secondSectionX = 563; // x coordinate of center of
-													// the top left circle of
-													// second section
-	private static final int thirdSectionX = 973; // x coordinate of center of
-													// the top left circle of
-													// 3rd section
+	private static final int firstSectionX = 154; // x coordinate of center of the top left circle of first section
+	private static final int secondSectionX = 563; // x coordinate of center of the top left circle of second section
+	private static final int thirdSectionX = 973; // x coordinate of center of the top left circle of 3rd section
 	private static final int sectionsY = 790;
 	private ArrayList<String> studentAnswers = new ArrayList<>();
 	private int studentGrade;
@@ -41,10 +33,8 @@ public class Answer {
 
 	private ArrayList<String> getSectionAnswers(Mat image, int sectionXPos) {
 
-		int x = sectionXPos; // x coordinate of center of the top left circle
-								// section
-		int y = sectionsY; // y coordinate of center of the top left circle
-							// section
+		int x = sectionXPos; // x coordinate of center of the top left circle section
+		int y = sectionsY; // y coordinate of center of the top left circle section 
 		ArrayList<String> sectionAnswers = new ArrayList<>();
 		for (int s1 = 0; s1 < 15; s1++) {
 			int count = 0; // number of shaded circles

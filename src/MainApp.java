@@ -18,10 +18,10 @@ public class MainApp {
 		Mat image = Imgcodecs.imread(imagePath);
 		Mat kernel = ImageUtil.getCircularKernel(kernelSize);
 		image = ImageUtil.erode(image, kernel);
-		//Imgcodecs.imwrite("eroded.png", image);
+		Imgcodecs.imwrite("eroded.png", image);
 		kernel = ImageUtil.getCircularKernel(kernelSize + 1);
 		image = ImageUtil.dilate(image, kernel);
-		//Imgcodecs.imwrite("eroded_dilated.png", image);
+		Imgcodecs.imwrite("eroded_dilated.png", image);
 		Mat circles = ImageUtil.detectCircles(image);
 		// get the two bottom circles
 		ArrayList<Point> centers = ImageUtil.getCirclesCenters(circles, 20, 60, 1430);
@@ -37,23 +37,18 @@ public class MainApp {
 		// System.out.println(rightPoint.toString());
 
 		double xa = leftPoint.x, ya = leftPoint.y, xb = rightPoint.x, yb = rightPoint.y;
-		final int h = 108; // vertical distance between center of first circle
-							// and the parallel line
+		final int h = 108; // vertical distance between center of first circle and the parallel line
 		final int m = 118;
 		final double A = 1190; // length of left line
 		final double B = 992.395; // length of bottom line
 		final double C = 1180.4; // length of right line
 		final double D = 993.68; // length of top line
 
-		double slope; // slope of the line connecting the centers of the two
-						// bottom black circles
-		double theta; // angle that the line which connects the centers of the
-						// two circles make with the horizontal
+		double slope; // slope of the line connecting the centers of the two bottom black circles
+		double theta; // angle that the line which connects the centers of the two circles make with the horizontal
 
 		slope = (yb - ya) / (xb - xa);
-		theta = Math.atan(slope); // angle between the line connecting centers
-		// of the two circles and horizintal in radians
-
+		theta = Math.atan(slope); // angle between the line connecting centers of the two circles and horizintal in radians
 		// (x1, y1) (x2, y2), (x3,y3) (x4,y4) are the coordinates of the corners
 		// of the slant paper..
 		double x3 = xa + h * Math.sin(theta) - m * Math.cos(theta);
@@ -75,8 +70,7 @@ public class MainApp {
 		srcPoints[2] = new Point(x3, y3);
 		srcPoints[3] = new Point(x4, y4);
 
-		// dstPoints array contains the new coordinates which the slant paper
-		// corner
+		// dstPoints array contains the new coordinates which the slant paper corner
 		// coordinates will be mapped to.
 		Point[] dstPoints = new Point[4];
 
@@ -87,13 +81,13 @@ public class MainApp {
 
 		// wrap the image from srcPoints to dstPoints
 		image = ImageUtil.wrap(image, srcPoints, dstPoints);
-		//Imgcodecs.imwrite("eroded_dilated_wrapped.png", image);
+		Imgcodecs.imwrite("eroded_dilated_wrapped.png", image);
 
 		image = ImageUtil.erode(image, kernel);
 		Imgcodecs.imwrite("eroded_dilated_wrapped_eroded.png", image);
 
 		image = ImageUtil.thresholdImage(image);
-		//Imgcodecs.imwrite("eroded_dilated_wrapped_eroded_thresholded.png", image);
+		Imgcodecs.imwrite("eroded_dilated_wrapped_eroded_thresholded.png", image);
 		
 		Answer answer = new Answer();	
 		ArrayList<String> studentAnswers = answer.getStudentAnswers(image);
