@@ -9,7 +9,7 @@ public class MainApp {
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	}
-
+	
 	public static void main(String[] args) {
 
 		String imagePath = "1.png";
@@ -18,10 +18,10 @@ public class MainApp {
 		Mat image = Imgcodecs.imread(imagePath);
 		Mat kernel = ImageUtil.getCircularKernel(kernelSize);
 		image = ImageUtil.erode(image, kernel);
-		Imgcodecs.imwrite("eroded.png", image);
+		//Imgcodecs.imwrite("eroded.png", image);
 		kernel = ImageUtil.getCircularKernel(kernelSize + 1);
 		image = ImageUtil.dilate(image, kernel);
-		Imgcodecs.imwrite("eroded_dilated.png", image);
+		//Imgcodecs.imwrite("eroded_dilated.png", image);
 		Mat circles = ImageUtil.detectCircles(image);
 		// get the two bottom circles
 		ArrayList<Point> centers = ImageUtil.getCirclesCenters(circles, 20, 60, 1430);
@@ -87,12 +87,18 @@ public class MainApp {
 
 		// wrap the image from srcPoints to dstPoints
 		image = ImageUtil.wrap(image, srcPoints, dstPoints);
-		Imgcodecs.imwrite("eroded_dilated_wrapped.png", image);
+		//Imgcodecs.imwrite("eroded_dilated_wrapped.png", image);
 
 		image = ImageUtil.erode(image, kernel);
 		Imgcodecs.imwrite("eroded_dilated_wrapped_eroded.png", image);
 
 		image = ImageUtil.thresholdImage(image);
-		Imgcodecs.imwrite("eroded_dilated_wrapped_eroded_thresholded.png", image);
+		//Imgcodecs.imwrite("eroded_dilated_wrapped_eroded_thresholded.png", image);
+		
+		Answer answer = new Answer();	
+		ArrayList<String> studentAnswers = answer.getStudentAnswers(image);
+		System.out.println("student grade = " + answer.getStudentGrade(studentAnswers) + " / 45");
+		
+		
 	}
 }
